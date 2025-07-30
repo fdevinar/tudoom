@@ -4,6 +4,15 @@
   padding: 2rem;
   text-align: center;
 }
+body {
+  /* background: linear-gradient(135deg, #f0f0f0, #d2d2c0, #b0b19c); */
+    background-image: 
+    linear-gradient(135deg, #f0f0f0, #d2d2c0, #b0b19c),
+    url('assets/images/asfalt-light.png');
+    background-blend-mode: overlay;
+    background-size: cover; 
+    color: #000;   
+}
 .logo {
   height: 128px;
   width: 128px;
@@ -17,8 +26,7 @@ main {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 18px;
-  border: 1px dashed darkgreen;
+  gap: 18px;  
   padding: 16px;
 }
 ul {
@@ -26,4 +34,7 @@ ul {
 }
 ul li {
   text-align: start;
+  &.done {
+    text-decoration: line-through;
+  }
 }
