@@ -5,6 +5,7 @@ import logo from './assets/images/tudoom-logo.png';
 import useSound from 'use-sound';
 import platformSfx from './assets/sounds/platform-start.wav';
 import punchSfx from './assets/sounds/punch.wav';
+import painSfx from './assets/sounds/generic-demon-pain.wav';
 
 import './App.css'
 
@@ -28,9 +29,11 @@ function App() {
 
   const [playPlatform] = useSound(platformSfx);
   const [playPunch] = useSound(punchSfx);
+  const [playPain] = useSound(painSfx);
 
 
-  function newTask() {    
+  function newTask(e) {        
+    e.preventDefault();
     const newTask = {
       id: crypto.randomUUID(),
       text: inputValue,
@@ -48,17 +51,23 @@ function App() {
     playPunch();
   }
 
+  function notifyInvalid() {
+    playPain();
+  }
+
   return (
     <main>
       <img className='logo' src={logo} alt="logo" />
       <div className='input-wrapper'>
 
-        <input type="text" name="input"
-        value={inputValue}
-        onChange={e => setInputValue(e.target.value)}
-        />
+        <form onSubmit={newTask} onInvalid={notifyInvalid}>
+          <input type="text" name="input" required
+          value={inputValue}
+          onChange={e => setInputValue(e.target.value)}          
+          />
+          <button type="submit">+</button>
+        </form>
 
-        <button onClick={newTask}>+</button>
 
         <div className='input-list'>
           <ul>

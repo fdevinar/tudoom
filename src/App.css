@@ -17,9 +17,10 @@ body {
   height: 128px;
   width: 128px;
   border-radius: 16px;
+  transition: filter 333ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em olive);
+  filter: drop-shadow(0 0 3em olive);
 }
 main {
   display: flex;
@@ -29,12 +30,19 @@ main {
   gap: 18px;  
   padding: 16px;
 }
+.input-wrapper {
+  z-index: 2;
+}
 ul {
   list-style: number;
 }
 ul li {
   text-align: start;
+  transition: font-weight 100ms ease-in;
   &.done {
     text-decoration: line-through;
+  }
+  &:hover {
+    font-weight: 700;    
   }
 }
