@@ -61,25 +61,26 @@ function App() {
       <div className='input-wrapper'>
 
         <form onSubmit={newTask} onInvalid={notifyInvalid}>
-          <input type="text" name="input" required
+          <input type="text" name="input" required pattern=".*\S.*"
           value={inputValue}
-          onChange={e => setInputValue(e.target.value)}          
+          onChange={e => setInputValue(e.target.value)}
           />
           <button type="submit">+</button>
         </form>
 
 
         <div className='input-list'>
-          <ul>
+          
             {inputList.map((item) => (
-              <li 
+              <div 
+              className={`item ${item.isDone ? 'done' : ''}`} 
               onClick={()=> toggleTask(item.id)} 
-              className={item.isDone ? 'done' : '' } 
               key={item.id}>                
                 {item.text}
-              </li>
+                {/* <span className="trash">🗑️</span> */}
+              </div>              
             ))}
-          </ul>
+          
         </div>
       </div>
     </main>

@@ -33,12 +33,18 @@ main {
 .input-wrapper {
   z-index: 2;
 }
-ul {
-  list-style: number;
+.input-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 16px;
 }
-ul li {
+.input-list div {
   text-align: start;
   transition: font-weight 100ms ease-in;
+  border: 1px solid olive;
+  border-radius: 12px;
+  padding: 4px;
   &.done {
     text-decoration: line-through;
   }
