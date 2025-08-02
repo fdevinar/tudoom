@@ -33,22 +33,27 @@ main {
 .input-wrapper {
   z-index: 2;
 }
+form input, form button {
+  padding: 6px;
+}
 .input-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-top: 16px;
 }
-.input-list div {
+.input-list .item {
   text-align: start;
   transition: font-weight 100ms ease-in;
-  border: 1px solid olive;
-  border-radius: 12px;
-  padding: 4px;
-  &.done {
-    text-decoration: line-through;
-  }
+  border: 1px solid #2f2f2f;
+  background-color: darkgray;
+  padding: 6px;  
   &:hover {
     font-weight: 700;    
   }
+}
+.input-list .item.done span {
+  text-decoration: line-through;
+  opacity: 0.3;
+  
 }

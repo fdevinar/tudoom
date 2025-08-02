@@ -1,12 +1,10 @@
 import { useState } from 'react';
-
 import logo from './assets/images/tudoom-logo.png';
-
 import useSound from 'use-sound';
 import platformSfx from './assets/sounds/platform-start.wav';
 import punchSfx from './assets/sounds/punch.wav';
 import painSfx from './assets/sounds/generic-demon-pain.wav';
-
+import TaskItem from './TaskItem';
 import './App.css'
 
 function App() {
@@ -59,7 +57,7 @@ function App() {
     <main>
       <img className='logo' src={logo} alt="logo" />
       <div className='input-wrapper'>
-
+        
         <form onSubmit={newTask} onInvalid={notifyInvalid}>
           <input type="text" name="input" required pattern=".*\S.*"
           value={inputValue}
@@ -68,19 +66,15 @@ function App() {
           <button type="submit">+</button>
         </form>
 
-
-        <div className='input-list'>
-          
-            {inputList.map((item) => (
-              <div 
-              className={`item ${item.isDone ? 'done' : ''}`} 
-              onClick={()=> toggleTask(item.id)} 
-              key={item.id}>                
-                {item.text}
-                {/* <span className="trash">🗑️</span> */}
-              </div>              
-            ))}
-          
+        <div className='input-list'>          
+            {inputList.map((task) => (
+              <TaskItem
+                key={task.id}
+                task={task}                                 
+                onToggle={() => toggleTask(task.id)}
+                >
+              </TaskItem>                                            
+            ))}          
         </div>
       </div>
     </main>
