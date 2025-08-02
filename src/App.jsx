@@ -10,7 +10,7 @@ import './App.css'
 function App() {
   
   const [inputValue, setInputValue] = useState('');
-  const [inputList, setInputList] = useState([    
+  const [taskList, setTaskList] = useState([    
     { id:"e473a0ea-aa3e-42ab-8be8-6e9e79baba2a",
       text:"Study React",
       isDone: false
@@ -37,16 +37,24 @@ function App() {
       text: inputValue,
       isDone: false
     }
-    setInputList(prev=> [...prev, newTask]);
+    setTaskList(prev=> [...prev, newTask]);
     setInputValue('');
     playPlatform();
   }
 
   function toggleTask(id) {
-    setInputList(prev => 
+    setTaskList(prev => 
       prev.map(task => task.id === id ? { ...task, isDone: !task.isDone } : task)
     )
     playPunch();
+  }
+
+  function deleteTask(id) {
+    alert('delete this task');
+  }
+
+  function editTask(id) {
+    alert('edit this task');
   }
 
   function notifyInvalid() {
@@ -67,11 +75,13 @@ function App() {
         </form>
 
         <div className='input-list'>          
-            {inputList.map((task) => (
+            {taskList.map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}                                 
                 onToggle={() => toggleTask(task.id)}
+                onDelete={() => deleteTask(task.id)}
+                onEdit={() => editTask(task.id)}
                 >
               </TaskItem>                                            
             ))}          

@@ -48,12 +48,19 @@ form input, form button {
   border: 1px solid #2f2f2f;
   background-color: darkgray;
   padding: 6px;  
+  display: flex;
+  justify-content: space-between;
   &:hover {
-    font-weight: 700;    
+    font-weight: 700;
+    .btn-wrapper {
+      display: flex;
+    }
   }
 }
 .input-list .item.done span {
   text-decoration: line-through;
-  opacity: 0.3;
-  
+  opacity: 0.3; 
+}
+.input-list .item .btn-wrapper {
+  display: none;
 }
