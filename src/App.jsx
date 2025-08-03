@@ -50,11 +50,14 @@ function App() {
   }
 
   function deleteTask(id) {
-    alert('delete this task');
+    setTaskList(prev =>
+      prev.filter(task => task.id != id)
+    )
+    //TODO: add explosion noise
   }
 
   function editTask(id) {
-    alert('edit this task');
+    alert('edit this task' + id);
   }
 
   function notifyInvalid() {
