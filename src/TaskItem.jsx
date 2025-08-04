@@ -4,10 +4,11 @@ export default function TaskItem ({task, onToggle, onEdit, onDelete }) {
 
     return (
         <div className={`item ${task.isDone ? 'done' : ''}`}>
-            <span onClick={onToggle}>{task.text}</span>
+            <span>{task.text}</span>
             <div className="btn-wrapper">
-                <div onClick={onEdit}>✍️</div>
-                <div onClick={onDelete}>💣</div>
+                <div title="Mark as Done" onClick={onToggle}>✅</div>
+                <div title="Edit Task" onClick={onEdit}>✍️</div>
+                <div title="Delete Task" onClick={onDelete}>💣</div>
             </div>
         </div>
 

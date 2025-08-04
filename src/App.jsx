@@ -4,6 +4,7 @@ import useSound from 'use-sound';
 import platformSfx from './assets/sounds/platform-start.wav';
 import punchSfx from './assets/sounds/punch.wav';
 import painSfx from './assets/sounds/generic-demon-pain.wav';
+import explodeSfx from './assets/sounds/calamity-blade-projectile-explode.wav';
 import TaskItem from './TaskItem';
 import './App.css'
 
@@ -28,6 +29,7 @@ function App() {
   const [playPlatform] = useSound(platformSfx);
   const [playPunch] = useSound(punchSfx);
   const [playPain] = useSound(painSfx);
+  const [playExplode] = useSound(explodeSfx);
 
 
   function newTask(e) {        
@@ -53,7 +55,7 @@ function App() {
     setTaskList(prev =>
       prev.filter(task => task.id != id)
     )
-    //TODO: add explosion noise
+    playExplode();
   }
 
   function editTask(id) {
@@ -74,7 +76,7 @@ function App() {
           value={inputValue}
           onChange={e => setInputValue(e.target.value)}
           />
-          <button type="submit">+</button>
+          <button type="submit">➕</button>
         </form>
 
         <div className='input-list'>          
@@ -89,7 +91,13 @@ function App() {
               </TaskItem>                                            
             ))}          
         </div>
+            <span className="task-count">
+              {/* const count = arr.reduce((a, str) => a + str.includes('ABC'), 0); */}              
+              {taskList.filter((task) => task.isDone === true).length} tasks out of {taskList.length}
+              </span>
+             
       </div>
+
     </main>
   )
 }

@@ -31,10 +31,21 @@ main {
   padding: 16px;
 }
 .input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   z-index: 2;
 }
-form input, form button {
-  padding: 6px;
+form {
+  gap: 4px;
+  display: flex;
+  align-items: center;
+}
+form input {
+  height: 24px;
+}
+form button {
+  height: 32px;
 }
 .input-list {
   display: flex;
@@ -63,4 +74,7 @@ form input, form button {
 }
 .input-list .item .btn-wrapper {
   display: none;
+}
+span.task-count {
+  margin-top: 12px;
 }
