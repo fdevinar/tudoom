@@ -55,14 +55,16 @@ form button {
 }
 .input-list .item {
   text-align: start;
-  transition: font-weight 100ms ease-in;
   border: 1px solid #2f2f2f;
   background-color: darkgray;
   padding: 6px;  
   display: flex;
   justify-content: space-between;
+  transition: font-weight 100ms ease-in;
+  transition: transform 333ms;
   &:hover {
     font-weight: 700;
+    transform: scale(1.05);
     .btn-wrapper {
       display: flex;
     }
@@ -77,4 +79,8 @@ form button {
 }
 span.task-count {
   margin-top: 12px;
+  &.alldone {
+    color: green;
+    font-weight: 700;
+  }
 }
