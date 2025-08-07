@@ -62,12 +62,31 @@ form button {
   justify-content: space-between;
   transition: font-weight 100ms ease-in;
   transition: transform 333ms;
+  animation: 0.5s linear 1s infinite alternate slide-in;
   &:hover {
     font-weight: 700;
     transform: scale(1.05);
     .btn-wrapper {
       display: flex;
     }
+  }
+}
+.input-list .item.animate {
+  opacity: 0;
+  animation-name: enterAnimation;
+  animation-duration: 333ms;
+  animation-iteration-count: 1; /* Play only once */
+  animation-fill-mode: forwards; /* Retain final state */
+  animation-delay: 0ms;
+  animation-timing-function: ease-out;
+}
+@keyframes enterAnimation {
+  from {
+    transform: translateX(-50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 .input-list .item.done span {
@@ -84,3 +103,4 @@ span.task-count {
     font-weight: 700;
   }
 }
+
