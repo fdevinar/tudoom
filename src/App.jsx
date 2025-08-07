@@ -6,6 +6,8 @@ import punchSfx from './assets/sounds/punch.wav';
 import painSfx from './assets/sounds/generic-demon-pain.wav';
 import explodeSfx from './assets/sounds/calamity-blade-projectile-explode.wav';
 import powerUpSfx from './assets/sounds/get-powerup.wav';
+import BFGSfx from './assets/sounds/BFG-explode.wav';
+
 import TaskItem from './TaskItem';
 import './App.css'
 
@@ -17,6 +19,7 @@ function App() {
   const [playPain] = useSound(painSfx);
   const [playExplode] = useSound(explodeSfx);
   const [playPowerUp] = useSound(powerUpSfx);
+  const [playBFG] = useSound(BFGSfx);
 
   // INPUT LIST
   const [inputValue, setInputValue] = useState('');
@@ -39,10 +42,11 @@ function App() {
   const countTask = taskList.length;
   const countDone = taskList.filter((task) => task.isDone === true).length;
   const [allDone, setAllDone] = useState(false);
+  const [isCalmDown, setIsCalmDown] = useState(false);
 
   useEffect(() => {
   
-  if (allDone != true && countTask === countDone) {
+  if (allDone != true && countTask === countDone && countTask != 0) {
     playPowerUp();
     setAllDone(true);
   } else if (allDone === true && countTask != countDone) {
@@ -86,8 +90,20 @@ function App() {
     playPain();
   }
 
+  function deleteAllTasks() {
+    console.log(taskList.length);
+    if (taskList.length > 0) {
+      setTaskList([]);
+      playBFG();
+    } else {
+      setIsCalmDown(true);
+      setTimeout(() => setIsCalmDown(false), 2000);
+    }
+  }
+
   return (
-    <main>
+    <main>      
+
       <img className='logo' src={logo} alt="logo" />
       <div className='input-wrapper'>
         
@@ -111,12 +127,16 @@ function App() {
               </TaskItem>                                            
             ))}          
         </div>            
-            <span className={`task-count ${countDone === countTask ? "alldone" : ""}`}>
+            <span className={`task-count ${countTask != 0 && countDone === countTask ? "alldone" : ""}`}>
               {/* const count = arr.reduce((a, str) => a + str.includes('ABC'), 0); */}              
               {countDone} tasks out of {countTask}
               </span>
              
       </div>
+
+      <button className='BFG' onClick={deleteAllTasks}>BRING HELL!</button>
+      <p className={`calm ${isCalmDown ? 'animate' : ''}`}>Calm down chief...</p>
+
 
     </main>
   )

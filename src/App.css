@@ -29,6 +29,7 @@ main {
   align-items: center;
   gap: 18px;  
   padding: 16px;
+  position: relative;
 }
 .input-wrapper {
   display: flex;
@@ -104,3 +105,24 @@ span.task-count {
   }
 }
 
+button.BFG {
+  background-color: crimson;
+  color: white;
+  font-size: 16px;
+}
+p.calm {
+  color: black;
+  background-color: skyblue;
+  padding: 12px;
+  border-radius: 12px;
+  opacity: 0;
+  animation: 0.5s linear 1s infinite alternate slide-in;
+  &.animate {
+    animation-name: enterAnimation;
+    animation-duration: 333ms;
+    animation-iteration-count: 1; /* Play only once */
+    animation-fill-mode: forwards; /* Retain final state */
+    animation-delay: 0ms;
+    animation-timing-function: ease-out;
+  }
+}
