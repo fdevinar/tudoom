@@ -42,7 +42,21 @@ function App() {
   const countTask = taskList.length;
   const countDone = taskList.filter((task) => task.isDone === true).length;
   const [allDone, setAllDone] = useState(false);
+  
+  // MISC
   const [isCalmDown, setIsCalmDown] = useState(false);
+  const taglineList = [
+  'Rip and list it.',
+  'Stay frosty, marine.',
+  'No task too tough.',
+  'One list to slay them all.',
+  'Secure the objective.',
+  'Lock. Load. Complete.',
+  'Your mission starts here.',
+  'All demons cleared… eventually.',
+  'Command & complete.',
+  'The only easy task was yesterday’s.',
+  ]
 
   useEffect(() => {
   
@@ -105,6 +119,9 @@ function App() {
     <main>      
 
       <img className='logo' src={logo} alt="logo" />
+
+      <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p>
+
       <div className='input-wrapper'>
         
         <form onSubmit={newTask} onInvalid={notifyInvalid}>

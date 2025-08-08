@@ -13,15 +13,7 @@ body {
     background-size: cover; 
     color: #000;   
 }
-.logo {
-  height: 128px;
-  width: 128px;
-  border-radius: 16px;
-  transition: filter 333ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 3em olive);
-}
+
 main {
   display: flex;
   flex-direction: column;
@@ -31,6 +23,27 @@ main {
   padding: 16px;
   position: relative;
 }
+
+.logo {
+  height: 128px;
+  width: 128px;
+  border-radius: 16px;
+  transition: filter 333ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 3em olive);
+}
+
+p.tagline {
+  text-transform: uppercase;
+  text-align: center;
+  width: fit-content;
+  margin: 0 auto;
+  font-size: 18px;
+  font-weight: 600;
+  color: olive;
+}
+
 .input-wrapper {
   display: flex;
   flex-direction: column;
