@@ -96,8 +96,10 @@ function App() {
     playExplode();
   }
 
-  function editTask(id) {
-    alert('edit this task' + id);
+  function editTask(id, newText) {    
+    setTaskList(prev => 
+      prev.map(task => task.id === id ? { ...task, text: newText } : task)
+    )
   }
 
   function notifyInvalid() {
@@ -120,7 +122,8 @@ function App() {
 
       <img className='logo' src={logo} alt="logo" />
 
-      <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p>
+      {/* <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p> */}
+      <p className="tagline">{taglineList[0]}</p>
 
       <div className='input-wrapper'>
         
@@ -139,13 +142,12 @@ function App() {
                 task={task}                                 
                 onToggle={() => toggleTask(task.id)}
                 onDelete={() => deleteTask(task.id)}
-                onEdit={() => editTask(task.id)}
+                onSave={(id, newText) => editTask(id, newText)}
                 >
               </TaskItem>                                            
             ))}          
         </div>            
             <span className={`task-count ${countTask != 0 && countDone === countTask ? "alldone" : ""}`}>
-              {/* const count = arr.reduce((a, str) => a + str.includes('ABC'), 0); */}              
               {countDone} tasks out of {countTask}
               </span>
              
