@@ -7,6 +7,8 @@ import painSfx from './assets/sounds/generic-demon-pain.wav';
 import explodeSfx from './assets/sounds/calamity-blade-projectile-explode.wav';
 import powerUpSfx from './assets/sounds/get-powerup.wav';
 import BFGSfx from './assets/sounds/BFG-explode.wav';
+import breakSfx from './assets/sounds/break.wav';
+
 
 import TaskItem from './TaskItem';
 import './App.css'
@@ -20,6 +22,7 @@ function App() {
   const [playExplode] = useSound(explodeSfx);
   const [playPowerUp] = useSound(powerUpSfx);
   const [playBFG] = useSound(BFGSfx);
+  const [playBreak] = useSound(breakSfx);
 
   // INPUT LIST
   const [inputValue, setInputValue] = useState('');
@@ -33,7 +36,7 @@ function App() {
       isDone: false
     },
     { id:"be864c40-55b2-4f3c-acc4-92ec415c7105",
-      text:"Go to Gym ",
+      text:"Go to Gym",
       isDone: false
     },
   ]);
@@ -100,6 +103,7 @@ function App() {
     setTaskList(prev => 
       prev.map(task => task.id === id ? { ...task, text: newText } : task)
     )
+    playBreak();
   }
 
   function notifyInvalid() {
