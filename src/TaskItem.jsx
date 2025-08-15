@@ -17,7 +17,7 @@ export default function TaskItem ({task, onToggle, onSave, onDelete }) {
         playChainsawIdle();            
     }
     function onConfirm() {
-        if (editText) {
+        if (editText.trim()) {
             onSave(task.id, editText.trim());
             setIsEditing(false);        
         }

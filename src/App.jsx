@@ -9,7 +9,6 @@ import powerUpSfx from './assets/sounds/get-powerup.wav';
 import BFGSfx from './assets/sounds/BFG-explode.wav';
 import breakSfx from './assets/sounds/break.wav';
 
-
 import TaskItem from './TaskItem';
 import './App.css'
 
@@ -126,8 +125,7 @@ function App() {
 
       <img className='logo' src={logo} alt="logo" />
 
-      {/* <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p> */}
-      <p className="tagline">{taglineList[0]}</p>
+      <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p>      
 
       <div className='input-wrapper'>
         
