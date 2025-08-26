@@ -44,6 +44,7 @@ function App() {
   const countTask = taskList.length;
   const countDone = taskList.filter((task) => task.isDone === true).length;
   const [allDone, setAllDone] = useState(false);
+  const clearDoneBtn = countDone > 0 && <button className="clear-done-btn" title="Clear All Done" onClick={() => clearAllDone()}>🧨 Detonate Completed</button>; 
   
   // MISC
   const [isCalmDown, setIsCalmDown] = useState(false);
@@ -110,7 +111,6 @@ function App() {
   }
 
   function deleteAllTasks() {
-    console.log(taskList.length);
     if (taskList.length > 0) {
       setTaskList([]);
       playBFG();
@@ -120,15 +120,18 @@ function App() {
     }
   }
 
+  function clearAllDone() {
+    setTaskList(prev =>
+      prev.filter(task => !task.isDone)
+    )
+    playExplode();
+  }
+
   return (
     <main>      
-
       <img className='logo' src={logo} alt="logo" />
-
       <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p>      
-
       <div className='input-wrapper'>
-        
         <form onSubmit={newTask} onInvalid={notifyInvalid}>
           <input type="text" name="input" required pattern=".*\S.*"
           value={inputValue}
@@ -136,7 +139,6 @@ function App() {
           />
           <button type="submit">➕</button>
         </form>
-
         <div className='input-list'>          
             {taskList.map((task) => (
               <TaskItem
@@ -146,19 +148,16 @@ function App() {
                 onDelete={() => deleteTask(task.id)}
                 onSave={(id, newText) => editTask(id, newText)}
                 >
-              </TaskItem>                                            
+              </TaskItem>
             ))}          
         </div>            
-            <span className={`task-count ${countTask != 0 && countDone === countTask ? "alldone" : ""}`}>
-              {countDone} tasks out of {countTask}
-              </span>
-             
+        <span className={`task-count ${countTask != 0 && countDone === countTask ? "alldone" : ""}`}>
+          {countDone} tasks out of {countTask}
+        </span>
       </div>
-
+      {clearDoneBtn}
       <button className='BFG' onClick={deleteAllTasks}>BRING HELL!</button>
       <p className={`calm ${isCalmDown ? 'animate' : ''}`}>Calm down chief...</p>
-
-
     </main>
   )
 }
