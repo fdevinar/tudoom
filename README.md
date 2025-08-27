@@ -17,8 +17,8 @@ Done when: Action icons are button with aria-label; keyboard tab/space/enter wor
 
 Small features (20–60 min)
 
-Clear completed
-Done when: Button appears only if there’s at least 1 done; removes all done; plays SFX.
+~~ Clear completed ~~
+~~ Done when: Button appears only if there’s at least 1 done; removes all done; plays SFX.~~ 
 
 Filters: All / Active / Done
 Done when: Simple three-button toggle filters the rendered list; URL/state not required.

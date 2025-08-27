@@ -24,8 +24,8 @@ function App() {
   const [playBreak] = useSound(breakSfx);
 
   // INPUT LIST
-  const [inputValue, setInputValue] = useState('');
-  const [taskList, setTaskList] = useState([    
+
+  const defaultTasks = [    
     { id:"e473a0ea-aa3e-42ab-8be8-6e9e79baba2a",
       text:"Study React",
       isDone: false
@@ -37,40 +37,39 @@ function App() {
     { id:"be864c40-55b2-4f3c-acc4-92ec415c7105",
       text:"Go to Gym",
       isDone: false
-    },
-  ]);
+    }]
 
+  const [inputValue, setInputValue] = useState('');
+  const [taskList, setTaskList] = useState(() => {
+    const storageList = localStorage.getItem('tudoom-tasks');
+    return storageList ? JSON.parse(storageList) : defaultTasks;
+  });
+
+  // MISC
+  const [isCalmDown, setIsCalmDown] = useState(false);
+  const taglineList = ['Rip and list it.','Stay frosty, marine.','No task too tough.','One list to slay them all.','Secure the objective.',
+  'Lock. Load. Complete.','Your mission starts here.','All demons cleared… eventually.','Command & complete.','The only easy task was yesterday’s.']
+  
   // DONE CONTROL
   const countTask = taskList.length;
   const countDone = taskList.filter((task) => task.isDone === true).length;
   const [allDone, setAllDone] = useState(false);
   const clearDoneBtn = countDone > 0 && <button className="clear-done-btn" title="Clear All Done" onClick={() => clearAllDone()}>🧨 Detonate Completed</button>; 
   
-  // MISC
-  const [isCalmDown, setIsCalmDown] = useState(false);
-  const taglineList = [
-  'Rip and list it.',
-  'Stay frosty, marine.',
-  'No task too tough.',
-  'One list to slay them all.',
-  'Secure the objective.',
-  'Lock. Load. Complete.',
-  'Your mission starts here.',
-  'All demons cleared… eventually.',
-  'Command & complete.',
-  'The only easy task was yesterday’s.',
-  ]
-
-  useEffect(() => {
-  
+  useEffect(() => {  
   if (allDone != true && countTask === countDone && countTask != 0) {
     playPowerUp();
     setAllDone(true);
   } else if (allDone === true && countTask != countDone) {
     setAllDone(false);
   }
-
   }), [countTask, countDone];
+
+  // PERSISTENCE
+
+  useEffect(() => {
+    localStorage.setItem("tudoom-tasks", JSON.stringify(taskList));
+  }), [taskList];
 
   // FUNCTIONS
   function newTask(e) {        
@@ -127,9 +126,15 @@ function App() {
     playExplode();
   }
 
+  function resetTasks() {
+    localStorage.removeItem('tudoom-tasks');
+    setTaskList(defaultTasks);
+    window.location.reload();
+  }
+
   return (
     <main>      
-      <img className='logo' src={logo} alt="logo" />
+      <img className='logo' src={logo} alt="logo" onClick={() => resetTasks()} />
       <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p>      
       <div className='input-wrapper'>
         <form onSubmit={newTask} onInvalid={notifyInvalid}>
