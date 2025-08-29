@@ -45,7 +45,7 @@ p.tagline {
   color: olive;
 }
 
-.input-wrapper {
+.input-task-wrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -64,14 +64,14 @@ form input {
 form button {
   height: 32px;
 }
-.input-list {
+.task-list {
   display: flex;
   flex-direction: column;
   gap: 12px;
   margin-top: 16px;
   width: 100%;
 }
-.input-list .item {
+.task-list .item {
   width: 100%;
   text-align: start;
   border: 1px solid #2f2f2f;
@@ -90,7 +90,7 @@ form button {
     } */
   }
 }
-.input-list .item.animate {
+.task-list .item.animate {
   opacity: 0;
   animation-name: enterAnimation;
   animation-duration: 333ms;
@@ -108,16 +108,16 @@ form button {
     transform: translateX(0);
   }
 }
-.input-list .item.done span {
+.task-list .item.done span {
   text-decoration: line-through;
   opacity: 0.3; 
 }
-.input-list .item .btn-wrapper {
+.task-list .item .btn-wrapper {
   display: flex;
   align-items: center;
   gap: 8px;
 }
-.input-list .item input {
+.task-list .item input {
   width: 100%;
 }
 span.task-count {
@@ -171,4 +171,15 @@ p.calm {
   padding: 8px;
   border-radius: 4px;
   font-size: 12px;
+}
+
+.filter-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 240px;
+}
+
+.filter-wrapper .filter-item {  
+  border: 0.5px dashed black;
+  padding: 4px 8px;
 }

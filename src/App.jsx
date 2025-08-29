@@ -1,27 +1,12 @@
 import { useState, useEffect } from 'react';
 import logo from './assets/images/tudoom-logo.png';
-import useSound from 'use-sound';
-import platformSfx from './assets/sounds/platform-start.wav';
-import punchSfx from './assets/sounds/punch.wav';
-import painSfx from './assets/sounds/generic-demon-pain.wav';
-import explodeSfx from './assets/sounds/calamity-blade-projectile-explode.wav';
-import powerUpSfx from './assets/sounds/get-powerup.wav';
-import BFGSfx from './assets/sounds/BFG-explode.wav';
-import breakSfx from './assets/sounds/break.wav';
-
+import sounds from './utils/sounds.js';
 import TaskItem from './TaskItem';
 import './App.css'
 
 function App() {
   
-  // SOUNDS
-  const [playPlatform] = useSound(platformSfx);
-  const [playPunch] = useSound(punchSfx);
-  const [playPain] = useSound(painSfx);
-  const [playExplode] = useSound(explodeSfx);
-  const [playPowerUp] = useSound(powerUpSfx);
-  const [playBFG] = useSound(BFGSfx);
-  const [playBreak] = useSound(breakSfx);
+  const { playPlatform, playPunch, playPain, playExplode, playPowerUp, playBFG, playBreak } = sounds(0.5);
 
   // INPUT LIST
 
@@ -37,7 +22,12 @@ function App() {
     { id:"be864c40-55b2-4f3c-acc4-92ec415c7105",
       text:"Go to Gym",
       isDone: false
-    }]
+    },
+    { id:"'defa947f-d873-4d87-94b6-aad16006c1ac'",
+      text:"Buy Food",
+      isDone: true
+    }
+  ]
 
   const [inputValue, setInputValue] = useState('');
   const [taskList, setTaskList] = useState(() => {
@@ -49,7 +39,7 @@ function App() {
   const [isCalmDown, setIsCalmDown] = useState(false);
   const taglineList = ['Rip and list it.','Stay frosty, marine.','No task too tough.','One list to slay them all.','Secure the objective.',
   'Lock. Load. Complete.','Your mission starts here.','All demons cleared… eventually.','Command & complete.','The only easy task was yesterday’s.']
-  
+
   // DONE CONTROL
   const countTask = taskList.length;
   const countDone = taskList.filter((task) => task.isDone === true).length;
@@ -66,13 +56,22 @@ function App() {
   }), [countTask, countDone];
 
   // PERSISTENCE
-
   useEffect(() => {
     localStorage.setItem("tudoom-tasks", JSON.stringify(taskList));
   }), [taskList];
 
+  // FILTER
+  const [filterValue, setFilterValue] = useState('all');
+
+  let visibleList = taskList;
+    if (filterValue === 'done') {
+      visibleList = taskList.filter((task) => task.isDone);  
+    } else if (filterValue === "active") {
+      visibleList = taskList.filter((task) => !task.isDone);
+    }
+
   // FUNCTIONS
-  function newTask(e) {        
+  const newTask = (e) => {        
     e.preventDefault();
     const newTask = {
       id: crypto.randomUUID(),
@@ -84,21 +83,21 @@ function App() {
     playPlatform();
   }
 
-  function toggleTask(id) {
+  const toggleTask = (id) => {
     setTaskList(prev => 
       prev.map(task => task.id === id ? { ...task, isDone: !task.isDone } : task)
     )
     playPunch();
   }
 
-  function deleteTask(id) {
+  const deleteTask = (id) => {
     setTaskList(prev =>
       prev.filter(task => task.id != id)
     )
     playExplode();
   }
 
-  function editTask(id, newText) {    
+  const editTask = (id, newText) => {    
     setTaskList(prev => 
       prev.map(task => task.id === id ? { ...task, text: newText } : task)
     )
@@ -109,7 +108,7 @@ function App() {
     playPain();
   }
 
-  function deleteAllTasks() {
+  const deleteAllTasks = () => {
     if (taskList.length > 0) {
       setTaskList([]);
       playBFG();
@@ -119,7 +118,7 @@ function App() {
     }
   }
 
-  function clearAllDone() {
+  const clearAllDone = () => {
     setTaskList(prev =>
       prev.filter(task => !task.isDone)
     )
@@ -132,11 +131,31 @@ function App() {
     window.location.reload();
   }
 
+  const handleFilterChange = (event) => {
+    setFilterValue(event.target.value);
+  }
+
   return (
     <main>      
       <img className='logo' src={logo} alt="logo" onClick={() => resetTasks()} />
       <p className="tagline">{taglineList[Math.random() * Math.floor(taglineList.length) | 0]}</p>      
-      <div className='input-wrapper'>
+      <div className='input-task-wrapper'>
+        {/* FILTER */}
+        <div className='filter-wrapper'>
+          <div className="filter-item">
+            <input type="radio" name="task-filter" id="all" value="all" checked={filterValue === 'all'} onChange={ handleFilterChange }/>
+            <label htmlFor="all">All</label>
+          </div>
+          <div className="filter-item">
+            <input type="radio" name="task-filter" id="active" value="active" checked={filterValue === 'active'} onChange={ handleFilterChange }/>
+            <label htmlFor="active">Active</label>
+          </div>
+          <div className="filter-item">
+            <input type="radio" name="task-filter" id="done" value="done" checked={filterValue === 'done'} onChange={ handleFilterChange }/>
+            <label htmlFor="done">Done</label>
+          </div>
+        </div>                
+        {/* FORM */}
         <form onSubmit={newTask} onInvalid={notifyInvalid}>
           <input type="text" name="input" required pattern=".*\S.*"
           value={inputValue}
@@ -144,8 +163,10 @@ function App() {
           />
           <button type="submit">➕</button>
         </form>
-        <div className='input-list'>          
-            {taskList.map((task) => (
+        {/* TASK LIST */}
+        <div className='task-list'>          
+            {visibleList            
+            .map((task) => (
               <TaskItem
                 key={task.id}
                 task={task}                                 
@@ -154,12 +175,13 @@ function App() {
                 onSave={(id, newText) => editTask(id, newText)}
                 >
               </TaskItem>
-            ))}          
-        </div>            
-        <span className={`task-count ${countTask != 0 && countDone === countTask ? "alldone" : ""}`}>
-          {countDone} tasks out of {countTask}
-        </span>
+            ))}     
+        </div>                    
       </div>
+      {/* DONE CONTROL/MISC */}
+      <span className={`task-count ${countTask != 0 && countDone === countTask ? "alldone" : ""}`}>
+        {countDone} tasks out of {countTask}
+      </span>
       {clearDoneBtn}
       <button className='BFG' onClick={deleteAllTasks}>BRING HELL!</button>
       <p className={`calm ${isCalmDown ? 'animate' : ''}`}>Calm down chief...</p>

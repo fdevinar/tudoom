@@ -31,8 +31,8 @@ Done when: Mark-done pulse; delete fade/shrink; create slide-in (you’ve starte
 
 Persistence & data (30–90 min)
 
-localStorage (MVP)
-Done when: On load, tasks hydrate from localStorage; on any change, list is saved debounced (e.g., 150ms).
+~~ localStorage (MVP) ~~
+~~ Done when: On load, tasks hydrate from localStorage; on any change, list is saved debounced (e.g., 150ms). ~~
 Edge cases: Corrupted JSON → fall back to defaults gracefully.
 
 Reset to defaults
